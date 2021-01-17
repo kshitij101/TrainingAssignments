@@ -1,0 +1,40 @@
+.calculator {
+  border-style: solid;
+  width: 725px;
+  height: 600px;
+  margin: auto;
+}
+.calculator-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  margin-left: 200px;
+  margin-top: 50px;
+}
+
+.calculator-inp {
+  margin-left: 50px;
+  margin-top: 50px;
+  font-size: 50px;
+}
+
+button {
+  height: 60px;
+  width: 50px;
+  margin: 10px;
+  font-weight: bold;
+  background-color: rgb(70, 182, 226);
+}
+
+.operator {
+  background-color: #f44336;
+}
+.equal-sign {
+  background-color: #4caf50;
+}
+.all-clear {
+  background-color: #555555;
+}
+.decimal {
+  background-color: #e7e7e7;
+  color: black;
+}
