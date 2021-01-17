@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Document</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="container">
+        <h3>ENTER PRODUCT DETAILS</h3>
+        <form class="form-group"> 
+            <label for="prodId">ID</label>
+            <input type="text" id="prodId">
+
+            <label for="prodName">NAME</label>
+            <input type="text" id="prodName">
+
+            <label for="prodCategory">CATEGORY</label>
+            <select id="prodCategory">
+                <option value="mobile">MOBILE</option>
+                <option value="laptop">LAPTOP</option>
+                <option value="pc">PC</option>
+            </select>
+
+            <label for="prodId">PRICE</label>
+            <input type="text" id="prodPrice">
+
+            <label for="prodManufacturer">MANUFACTURER</label>
+            <input type="text" id="prodManufacturer">
+
+            <button type="submit" id="saveProd" class="btn btn-success">SAVE</button>
+            <button id="sortProd"  class="btn btn-info">SORT</button>
+            <button id="reverseProd" class="btn btn-warning">REVERSE</button>
+            <select id="filterTypes1">
+                <option value="-1"></option>
+                <option value="prodId">ID</option>
+                <option value="name">NAME</option>
+                <option value="category">CATEGORY</option>
+                <option value="price">PRICE</option>
+                <option value="manufacturer">MANUFACTURER</option>
+            </select>
+        </form>
+        <div>
+            <table id="prodTable" class="table table-dark">
+            </table>
+        </div>
+        <div>
+            <select id="filterTypes">
+                <option value="-1"></option>
+                <option value="prodId">ID</option>
+                <option value="name">NAME</option>
+                <option value="category">CATEGORY</option>
+                <option value="price">PRICE</option>
+                <option value="manufacturer">MANUFACTURER</option>
+            </select>
+            <input type="text" id="filterValue">
+            <select id="chooseCategory">
+                <option value="mobile">MOBILE</option>
+                <option value="laptop">LAPTOP</option>
+                <option value="pc">PC</option>
+            </select>
+            <table id="prodFilter" class="table table-dark">
+            </table>
+        </div>
+    </div>
+</body>
+</html>
