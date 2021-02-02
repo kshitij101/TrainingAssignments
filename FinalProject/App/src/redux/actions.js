@@ -66,6 +66,28 @@ export const getUserAction = (user)=>{
     };
 };
 
+export const updateReview = (data) => {
+    console.log("review update called");
+    return{
+        type: 'UPDATE_REVIEW',
+        payload:data
+    }
+}
+
+export const deleteReview = (data) => {
+    console.log("review delete called");
+    return{
+        type: 'DELETE_REVIEW',
+        payload:data
+    }
+}
+
+export const removeUpdateReviewCount = (data) => {
+    console.log("delete update review called");
+    return{
+        type: 'DELETE_UPDATE_REVIEW_COUNT'
+    }
+}
 
 export const getData = (data) => ({
     type:GET_DATA,

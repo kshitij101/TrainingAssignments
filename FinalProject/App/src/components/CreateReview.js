@@ -3,6 +3,7 @@ import { addUserReview } from '../redux/actions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import {loadState,saveState} from '../redux/localStorage';
 
 const CreateReview = () => {
     
@@ -11,19 +12,30 @@ const CreateReview = () => {
     const [genre,setMovieGenre] = useState('');
 
     const dispatch = useDispatch();
+    
+    const createReview = (e) =>{
 
-    const loggedInUser = useSelector((state) => state.userId);
+        e.preventDefault();
 
-    const createReview = () =>{
-        let reviewData = {moviename,review,genre,author:loggedInUser.id};
-        dispatch(addUserReview(reviewData)); 
+        let loggedInUser = -1;
+        if(loadState()){
+            loggedInUser = loadState();
+        }
+
+        let reviewData = {moviename,review,genre,author:loggedInUser.state};
+
+        if(reviewData.moviename !== "" || reviewData.genre !== "" || reviewData.review !== "")
+            dispatch(addUserReview(reviewData)); 
     }
     let reviewAdded = useSelector((state) => {if(state.reviewAdded){
                                                 return state.reviewAdded;
                                             }}
                     );
+
     if(reviewAdded){
-        return <Redirect to="/UserHome" />
+        if(reviewAdded.moviename === moviename){
+            return <Redirect to="/UserHome" />
+        }
     }
 
     return (
@@ -40,7 +52,7 @@ const CreateReview = () => {
                         <option value="ROMEDY">ROMEDY</option>
                         <option value="THRILLER">THRILLER</option>
                     </select>
-                    <button type="submit" onClick={createReview()}>SUBMIT</button>
+                    <button type="submit" onClick={(e) => createReview(e)}>SUBMIT</button>
                 </form>
         </div>
     )

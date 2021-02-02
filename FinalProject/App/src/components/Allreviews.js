@@ -1,8 +1,9 @@
 import { getReviews } from '../redux/actions';
+// import { removeUpdateReviewCount} from '../redux/actions';
 import React, { useEffect, useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 
-const Allreviews = () => {
+const Allreviews = (props) => {
 
     const dispatch = useDispatch();
     // const url = "http://localhost:4200";
@@ -44,7 +45,7 @@ const Allreviews = () => {
     return (
         <div className="container">
             <div className="card-deck">
-                <div className="row">   
+                <div className="row" >   
                 {
                     reviews && reviews.map((movie=>(
                         <div className="col-md-4 d-flex align-items-stretch">

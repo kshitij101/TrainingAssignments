@@ -69,7 +69,7 @@ const sequelize = new Sequelize("iwp", "root", "", {
 
 
 const user = require(path.join(__dirname, './models/users'))(sequelize, Sequelize.DataTypes);
-const review = require(path.join(__dirname, './models/reviews'))(sequelize, Sequelize.DataTypes);
+const reviews = require(path.join(__dirname, './models/reviews'))(sequelize, Sequelize.DataTypes);
 
 
 app.get('/api/users', (req, resp) => {
@@ -91,7 +91,7 @@ app.get('/api/reviews', (req, resp) => {
             force: false
         })
         .then(() =>
-            review.findAll()
+            reviews.findAll()
         )
         .then((data) => {
             resp.json({ stausCode: 200, rowCount: data.length,response:data });
@@ -106,7 +106,7 @@ app.get('/api/reviews/:id', (req, resp) => {
             force: false
         })
         .then(() =>
-            review.findAll({where:{author:id}})
+            reviews.findAll({where:{author:id}})
         )
         .then((data) => {
             resp.json({ stausCode: 200, rowCount: data.length,response:data });
@@ -148,8 +148,8 @@ app.post('/api/review', (req,resp)=>{
         force:false
     })
     .then(() => {
-        review.create({
-            moviewname:moviename,
+    reviews.create({
+            moviename:moviename,
             review:review,
             genre:genre,
             author:author
@@ -192,7 +192,6 @@ app.post('/api/login', (req,resp)=>{
     
 });
 
-
 app.get('/api/userAuth',verifyJWT,(req,resp)=>{
     resp.json({statusCode:200,response:"USER AUTHENTICATED",auth:true});
 });
@@ -206,6 +205,62 @@ app.get('/api/login', (req, resp) => {
         resp.json({statusCode:200,isLoggedIn:false});
         resp.end();
     }
+});
+
+// app.put('/api/review', (req,resp)=>{
+//     let { id,reviewchng } = req.body;
+//     sequelize.sync({
+//         force:false
+//     })
+//     .then(() => {
+//         reviews.update({review:reviewchng},{where:{id:parseInt(id)}})
+//     })
+//     .then((data) => {     
+//         resp.json({ stausCode: 200,response:id});
+//         resp.end();
+//     })
+//     .catch(error => {
+//         console.log(error);
+//     })
+    
+// });
+app.put('/api/review', async (req,resp)=>{
+    let { id,data } = req.body;
+    console.log(id,data);
+    try {
+        const userReview = await reviews.findOne({where:{id:id}});
+
+        userReview.review = data;
+
+        await userReview.save();
+
+        return resp.json({ statusCode: 200,response:id});
+    }catch(err){
+        console.log(err);
+    }
+    
+});
+
+app.delete('/api/review/:id', (req,resp)=>{
+    let id = parseInt(req.params.id);
+    console.log(id);
+    sequelize.sync({
+        force:false
+    })
+    .then(() => {
+        reviews.destroy({
+            where:{
+                id:id
+            }
+        })
+    })
+    .then(() =>{
+        resp.json({statusCode:200,response:id});
+        resp.end();
+    })
+    .catch(error =>{
+        console.log(error);
+    })
 });
 
 app.listen(4200, () => {

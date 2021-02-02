@@ -5,7 +5,7 @@ export default (state=initState,action) => {
         case "GET_REVIEWS":
             return {...state};
         case "GET_REVIEWS_SUCCESS":
-            return {...state, reviews: action.payload};
+            return {...state, reviews: action.payload,reviewUpdated: -1,reviewDeleted: -1};
         case "ADD_USER":
             return {...state};
         case "ADD_USER_SUCCESS":
@@ -30,6 +30,16 @@ export default (state=initState,action) => {
             return {...state};
         case "ADD_REVIEW_SUCCESS":
             return {...state, reviewAdded:action.payload,userId:action.payload.author};
+        case "UPDATE_REVIEW":
+            return {...state};
+        case "UPDATE_REVIEW_SUCCESS":
+            return {...state, reviewUpdated:action.payload};
+        case "DELETE_UPDATE_REVIEW_COUNT_SUCCESS":
+            return {...state, reviewUpdated:action.payload};
+        case "DELETE_REVIEW":
+            return {...state};
+        case "DELETE_REVIEW_SUCCESS":
+            return {...state, reviewDeleted:action.payload};
         default :
             return {...state};
     }

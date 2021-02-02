@@ -56,7 +56,7 @@ function userAdd(user){
     return resp;
 }
 function reviewAdd(user){
-
+    // console.log(user);
     let resp = axios.post(url+"/api/review",user)
                 .then(res=>{
                     return res.data.response;
@@ -91,6 +91,29 @@ function userAuth(user){
                     else{
                         return res.data.auth;
                     }
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+    return resp;
+}
+
+function reviewUpdate(data){
+    let resp = axios.put(url+"/api/review",data)
+                .then(res=>{
+                    return res.data.response;
+                })
+                .catch(error =>{
+                    console.log(error);
+                });
+    return resp;
+}
+
+function reviewDelete(data){
+    // console.log(data)
+    let resp = axios.delete(url+"/api/review/"+data.id)
+                .then(res=>{
+                    return res.data.response;
                 })
                 .catch(error =>{
                     console.log(error);
@@ -150,9 +173,30 @@ function* getAuthUser(action){
 }
 
 function* addMovieReview(action){
+    // console.log(action.payload);
     const resp = yield call(reviewAdd,action.payload);
     console.log("HANDLER ADDED REVIEW");
     yield put({type:"ADD_REVIEW_SUCCESS",payload:resp})
+}
+
+function* updateMovieReview(action){
+    // console.log(action.payload);
+    const resp = yield call(reviewUpdate,action.payload);
+    console.log("HANDLER UPDATED REVIEW");
+    yield put({type:"UPDATE_REVIEW_SUCCESS",payload:resp})
+}
+
+function* revertReviewUpdate(){
+    // console.log(action.payload);
+    console.log("HANDLER REVERTED UPDATE");
+    yield put({type:"DELETE_UPDATE_REVIEW_COUNT_SUCCESS",payload:-1})
+}
+
+function* deleteMovieReview(action){
+    // console.log(action.payload);
+    const resp = yield call(reviewDelete,action.payload);
+    console.log("HANDLER DELETED REVIEW");
+    yield put({type:"DELETE_REVIEW_SUCCESS",payload:resp})
 }
 
 export function* watcherSaga(){
@@ -163,4 +207,7 @@ export function* watcherSaga(){
     yield takeLatest('GET_AUTH',getAuthUser);
     yield takeLatest('GET_USER_REVIEWS',getReviewsUser);
     yield takeLatest('ADD_REVIEW',addMovieReview);
+    yield takeLatest('UPDATE_REVIEW',updateMovieReview);
+    yield takeLatest('DELETE_REVIEW',deleteMovieReview);
+    yield takeLatest('DELETE_UPDATE_REVIEW_COUNT',revertReviewUpdate);
 }
